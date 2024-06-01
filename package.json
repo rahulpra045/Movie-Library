@@ -1,5 +1,4 @@
 {
-  "homepage": "https://rahulpra045.github.io/Movie-Library",
   "name": "movie-library",
   "version": "0.1.0",
   "private": true,
@@ -20,7 +19,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build" ,
+    "deploy": "PUBLIC_URL=https://rahulpra045.github.io/Movie-Library npm run build && gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
