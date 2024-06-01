@@ -7,7 +7,7 @@ import { Container } from './NavBar'
 import { TrailerMovies } from '../Trailers/TrailerMovies'
 
 function Movies() {
-  const { toggle, inputValue } = useContext(Container)
+  const { toggle, inputValue } = useContext(Container) 
   const input = inputValue
   const [moviesData, setMoviesData] = useState([])
   const [trailer, setTrailer] = useState(true)

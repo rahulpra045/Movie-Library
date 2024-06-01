@@ -10,7 +10,7 @@
 
 .backgroun-Color-Main{
     width: 100vw;
-    height: 86vh;
+    height: 92vh;
     background-color: #0c1e25;
     padding-top: 20px;
     display: flex;
@@ -19,7 +19,7 @@
 }
 .backgroun-Color-secondary{
     width: 100vw;
-    height: 86vh;
+    height: 92vh;
     background-color: #fff;
     padding-top: 20px;
     display: flex;
@@ -37,7 +37,7 @@
 
 .Pricing-option1, .Pricing-option2, .Pricing-option3{
     width: 30vw;
-    height: 82vh;
+    height: 78vh;
     background-color: #000d13;
     margin-right: 20px;
     border-radius: 16px;
@@ -45,7 +45,7 @@
 }
 .light-Theme1, .light-Theme2, .light-Theme3{
     width: 30vw;
-    height: 82vh;
+    height: 78vh;
     background-color: #29534e;
     margin-right: 20px;
     border-radius: 16px;
@@ -105,7 +105,7 @@
 button{
     width: 86%;
     height: 6vh;
-    margin-left: 32px;
+    /* margin-left: 32px; */
     margin-bottom: 12px;
     border: none;
     border-radius: 7px;
@@ -120,12 +120,15 @@ button:hover{
 }
 #button1{
     margin-top: 98px;
+    margin-left: 32px;
 }
 #button2{
     margin-top: 55px;
+    margin-left: 32px;
 }
 #button3{
     margin-top: 12px;
+    margin-left: 32px;
 }
 #darktheme{
     display: flex;

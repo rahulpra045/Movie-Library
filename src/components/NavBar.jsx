@@ -2,15 +2,22 @@ import React, { Fragment, useState } from 'react';
 import { HiSearch } from 'react-icons/hi';
 import { BiMenu } from "react-icons/bi"; // Import burger menu icon
 import '../Styles/NavBarStyle.css';
-import { Routes, Route, NavLink } from 'react-router-dom';
+import { Routes, Route, NavLink , useNavigate, Link} from 'react-router-dom';
 import Movies from './Movies';
 import TvShows from './TvShows';
 import Trends from './Trends';
 import Pricing from './Pricing';
+import Login from './Login';
+import Register from './Register';
+import { useAuth } from '../contexts/authContext'
+import { doSignOut } from '../firebase/auth'
 
 export const Container = React.createContext();
 
 function NavBar() {
+  const navigate = useNavigate();
+  const { userLoggedIn } = useAuth();
+  
   const [toggle, setToggle] = useState(true);
   const [inputValue, setInputValue] = useState('');
   const [showMenu, setShowMenu] = useState(false); // State for burger menu
@@ -67,6 +74,16 @@ function NavBar() {
                 <span id={toggle ? 'Movies' : 'MoviesLight'}>Pricing</span>
               </NavLink>
             </div>
+            <div className='auth-links'>
+              {
+                userLoggedIn
+                  ? <button onClick={() => { doSignOut().then(() => { navigate('/Login') }) }} className='logout-button'>Logout</button>
+                  : <>
+                      <Link className='auth-link' to={'/Login'}>Login</Link>
+                      <Link className='auth-link' to={'/Register'}>Register</Link>
+                    </>
+              }
+            </div>
           </div>
           <div className="input-group">
             <input
@@ -80,7 +97,7 @@ function NavBar() {
               <div id={toggle ? 'Color-switcher-mover' : 'Color-switcher-moved'}></div>
             </div>
           </div>
-          <BiMenu className="burger-menu"  color={'white'} size={30} onClick={toggleMenu} />
+          <BiMenu className="burger-menu" color={'white'} size={30} onClick={toggleMenu} />
         </nav>
 
         {/* Burger menu */}
@@ -99,12 +116,25 @@ function NavBar() {
             <NavLink to="/TvShows" onClick={() => { setShowMenu(false); clearSearch(); }}>Tv Shows</NavLink>
             <NavLink to="/Trends" onClick={() => { setShowMenu(false); clearSearch(); }}>Trending</NavLink>
             <NavLink to="/Pricing" onClick={() => { setShowMenu(false); clearSearch(); }}>Pricing</NavLink>
+
+            {/* Authentication links */}
+            {userLoggedIn ? (
+                <button onClick={() => { doSignOut().then(() => { navigate('/Login'); setShowMenu(false); }) }} className="logout-button">Logout</button>
+              ) : (
+                <>
+                  <NavLink to="/Login" onClick={() => setShowMenu(false)}>Login</NavLink>
+                  <NavLink to="/Register" onClick={() => setShowMenu(false)}>Register</NavLink>
+                </>
+              )}
+            
           </div>
         )}
 
         <Routes>
           <Route path="/" element={<Movies />} />
           <Route path="/TvShows" element={<TvShows />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Register" element={<Register />} />
           <Route path="/Trends" element={<Trends />} />
           <Route path="/Pricing" element={<Pricing />} />
         </Routes>
