@@ -1,14 +1,18 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { AiFillPlayCircle, AiOutlineClose } from "react-icons/ai";
+import { AiFillPlayCircle, AiOutlineClose, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import NoImg from "./NoImg.jpg";
 import "../Styles/Videos.css";
 import { Container } from "./NavBar";
 import TrailerTvShows from "../Trailers/TrailerTvShows";
+import { useAuth } from '../contexts/authContext'
+
 
 function TvShows() {
+  const { userLoggedIn } = useAuth();
+
   const [showData, setShowData] = useState([]);
-  const { toggle, inputValue } = useContext(Container);
+  const { toggle, inputValue, watchlist, addToWatchlist, removeFromWatchlist } = useContext(Container);
   const [title, setTitle] = useState("");
   const input = inputValue;
   const [trailer, setTrailer] = useState(true);
@@ -33,6 +37,7 @@ function TvShows() {
     }, 100);
   }, [input]);
   
+  const isInWatchlist = (shows) => watchlist.some((item) => item.id === shows.id);
 
   const TvShowTitle = (shows) => {
     setTitle(shows.name);
@@ -45,7 +50,7 @@ function TvShows() {
           {showData.map((shows) => {
             return (
               <Fragment key={shows.id}>
-                <div id={trailer ? "container" : "NoContainer"}>
+                <div key={shows.id} id={trailer ? "container" : "NoContainer"}>
                   <AiFillPlayCircle
                     color="#fff"
                     fontSize={40}
@@ -65,8 +70,29 @@ function TvShows() {
                     id={shows.name.length > 28 ? "smaller-Text" : ""}
                     className={toggle ? "mainColor" : "secondaryColor"}
                   >
-                    {shows.name}
+                    {shows.name ? shows.name : "Show Title"}
                   </h3>
+                  {userLoggedIn ? (
+                isInWatchlist(shows) ? (
+                  <AiFillHeart
+                    color="#f00"
+                    fontSize={30}
+                    onClick={() => removeFromWatchlist(shows.id)}
+                  />
+                ) : (
+                  <AiOutlineHeart
+                  color={toggle ?  "#fff" : "#333"}
+                    fontSize={30}
+                    onClick={() => addToWatchlist(shows)}
+                  />
+                )
+              ) : (
+                <AiOutlineHeart
+                color={toggle ?  "#fff" : "#333"}
+                  fontSize={30}
+                  onClick={() => alert('Please log in to add movies to your watchlist')}
+                />
+              )}
                 </div>
               </Fragment>
             );

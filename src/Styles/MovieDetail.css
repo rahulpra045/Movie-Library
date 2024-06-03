@@ -1,0 +1,32 @@
+.movie-detail-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .movie-poster {
+    width: 300px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .movie-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .movie-overview {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .movie-release-date,
+  .movie-rating {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  /* Add more styles as needed */
+  

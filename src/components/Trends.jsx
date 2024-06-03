@@ -1,13 +1,17 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react'
 import axios from 'axios'
-import {AiFillPlayCircle, AiOutlineClose} from 'react-icons/ai'
+import {AiFillPlayCircle, AiOutlineClose, AiOutlineHeart, AiFillHeart} from 'react-icons/ai'
 import NoImg from './NoImg.jpg'
 import '../Styles/Videos.css'
 import { Container } from './NavBar'
 import { TrailerTrending } from '../Trailers/TrailerTrending'
+import { useAuth } from '../contexts/authContext'
+
 
 function Trends() {
-  const { toggle, inputValue } = useContext(Container)
+  const { userLoggedIn } = useAuth();
+
+  const { toggle, inputValue, watchlist, addToWatchlist, removeFromWatchlist } = useContext(Container)
   const input = inputValue
   const [trendArray, setTrendArray] = useState([])
   const [trailer, setTrailer] = useState(true)
@@ -42,6 +46,7 @@ function Trends() {
     setTrendTitle(trend.title)
     setTrailer(!trailer)
   }
+  const isInWatchlist = (trend) => watchlist.some((item) => item.id === trend.id);
 
   return (
     <Fragment>
@@ -50,11 +55,31 @@ function Trends() {
       {trendArray.map((trend) => {
         return (
           <Fragment>
-            <div id={trailer ? 'container' : 'NoContainer'}>
+            <div key={trend.id} id={trailer ? 'container' : 'NoContainer'}>
               <AiFillPlayCircle color='#fff' fontSize={40} id={trailer ? "playIcon" : 'hide'} onClick={() => TrendTitle(trend)}/>
               <img src={trend.poster_path ? `${Images}${trend.poster_path}`:NoImg} alt='' onClick={() => TrendTitle(trend)}/>
-              <h3 id= 'smaller-Text' className={toggle ? 'mainColor' : 'secondaryColor'}>{trend.title}</h3>
-
+              <h3 id= 'smaller-Text' className={toggle ? 'mainColor' : 'secondaryColor'}>{trend.title ? trend.title : "Movie Title"}</h3>
+              {userLoggedIn ? (
+                isInWatchlist(trend) ? (
+                  <AiFillHeart
+                    color="#f00"
+                    fontSize={30}
+                    onClick={() => removeFromWatchlist(trend.id)}
+                  />
+                ) : (
+                  <AiOutlineHeart
+                  color={toggle ?  "#fff" : "#333"}
+                    fontSize={30}
+                    onClick={() => addToWatchlist(trend)}
+                  />
+                )
+              ) : (
+                <AiOutlineHeart
+                color={toggle ?  "#fff" : "#333"}
+                  fontSize={30}
+                  onClick={() => alert('Please log in to add movies to your watchlist')}
+                />
+              )}
             </div>
           </Fragment>
         )

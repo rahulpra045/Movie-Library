@@ -9,15 +9,17 @@ import Trends from './Trends';
 import Pricing from './Pricing';
 import Login from './Login';
 import Register from './Register';
+import Watchlist from './Watchlist';
+import MovieDetail from './MovieDetail';
 import { useAuth } from '../contexts/authContext'
 import { doSignOut } from '../firebase/auth'
 
 export const Container = React.createContext();
 
-function NavBar() {
+function NavBar({children}) {
   const navigate = useNavigate();
   const { userLoggedIn } = useAuth();
-  
+  const [watchlist, setWatchlist] = useState([]);
   const [toggle, setToggle] = useState(true);
   const [inputValue, setInputValue] = useState('');
   const [showMenu, setShowMenu] = useState(false); // State for burger menu
@@ -30,8 +32,16 @@ function NavBar() {
     setInputValue('');
   };
 
+  const addToWatchlist = (movie) => {
+    setWatchlist((prevList) => [...prevList, movie]);
+  };
+
+  const removeFromWatchlist = (movieId) => {
+    setWatchlist((prevList) => prevList.filter((movie) => movie.id !== movieId));
+  };
+
   return (
-    <Container.Provider value={{ toggle, inputValue }}>
+    <Container.Provider value={{ toggle, inputValue , watchlist, addToWatchlist, removeFromWatchlist}}>
       <Fragment>
         <nav className={toggle ? '' : 'navBarColor'}>
           <div className="nav-options">
@@ -73,11 +83,20 @@ function NavBar() {
               >
                 <span id={toggle ? 'Movies' : 'MoviesLight'}>Pricing</span>
               </NavLink>
+              <NavLink
+                to="/Watchlist"
+                onClick={clearSearch}
+                style={({ isActive }) => {
+                  return { color: isActive ? '#fff' : '#EE9B00' };
+                }}
+              >
+                <span id={toggle ? 'Movies' : 'MoviesLight'}>Watchlist</span>
+              </NavLink>
             </div>
             <div className='auth-links'>
               {
                 userLoggedIn
-                  ? <button onClick={() => { doSignOut().then(() => { navigate('/Login') }) }} className='logout-button'>Logout</button>
+                  ? <button onClick={() => { doSignOut().then(() => { navigate('/') }) }} className='logout-button'>Logout</button>
                   : <>
                       <Link className='auth-link' to={'/Login'}>Login</Link>
                       <Link className='auth-link' to={'/Register'}>Register</Link>
@@ -98,6 +117,7 @@ function NavBar() {
             </div>
           </div>
           <BiMenu className="burger-menu" color={'white'} size={30} onClick={toggleMenu} />
+          {children}
         </nav>
 
         {/* Burger menu */}
@@ -116,6 +136,7 @@ function NavBar() {
             <NavLink to="/TvShows" onClick={() => { setShowMenu(false); clearSearch(); }}>Tv Shows</NavLink>
             <NavLink to="/Trends" onClick={() => { setShowMenu(false); clearSearch(); }}>Trending</NavLink>
             <NavLink to="/Pricing" onClick={() => { setShowMenu(false); clearSearch(); }}>Pricing</NavLink>
+            <NavLink to="/Watchlist" onClick={() => { setShowMenu(false); clearSearch(); }}>Watchlist</NavLink>
 
             {/* Authentication links */}
             {userLoggedIn ? (
@@ -137,6 +158,8 @@ function NavBar() {
           <Route path="/Register" element={<Register />} />
           <Route path="/Trends" element={<Trends />} />
           <Route path="/Pricing" element={<Pricing />} />
+          <Route path="/Watchlist" element={<Watchlist />} />
+          <Route path="/movies/:movieId" element={<MovieDetail />} />
         </Routes>
       </Fragment>
     </Container.Provider>
