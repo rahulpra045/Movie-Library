@@ -68,7 +68,7 @@ nav h1 {
 .nav-options a:hover {
   color: #fff;
   border-bottom: 2px solid #ee9b00;
-  padding-bottom: 5px;
+  /* padding-bottom: 5px; */
 }
 
 .nav-options a.active {

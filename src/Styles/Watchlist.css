@@ -1,0 +1,89 @@
+
+.watchlist-container {
+    display: flex;
+    flex-wrap: wrap;
+     justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  .watchlist-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%; /* Ensure it takes full width */
+  /* background-color: #222121; Maintain the same background color */
+  padding: 20px; /* Add padding as needed */
+  box-sizing: border-box; /* Include padding in the width */
+  overflow-y: auto;
+  }
+  .watchlist-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+    /* background-color: #494949; */
+    border-radius: 10px;
+    padding: 10px;
+    transition: transform 0.3s;
+  }
+
+  
+  .watchlist-item img {
+    width: 300px;
+    height: 450px;
+    margin: 25px 0px 4px 15px;
+    border-radius: 18px;
+  }
+  
+  /* .watchlist-item h3 {
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    margin-top: 10px;
+  } */
+  
+  .watchlist-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .mainBgColor {
+    background-color: #222121;
+    width: 100%;
+  }
+  
+  .secondaryBgColor {
+    background-color: #fff;
+  }
+  
+  .mainColor {
+    color: #fff;
+  }
+  
+  .secondaryColor {
+    color: #000;
+  }
+  .no-movies-message {
+    color: #fff; /* White text color */
+    font-size: 1.5em; /* Font size */
+    text-align: center; /* Center text */
+    margin-top: 50px; /* Margin at the top */
+  }
+  .mainColor{
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    font-size: 1rem;
+}
+.secondaryColor{
+  color: #ff206e;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+}
+#smaller-Text{
+  width: 100%;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+}

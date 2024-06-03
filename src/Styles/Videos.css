@@ -78,9 +78,24 @@ body{
 }
 .DarkTheme{
     color:#fff;
-    left: 732px;
+    left: 672px;
+    
 }
 .LightThemeClose{
     color: #ff206e;
+    left: 672px;
+
 }
- 
+
+
+@media only screen and (max-width: 768px) {
+    #Exit1 {
+        margin-left: 20px; /* Adjust as needed */
+        margin-top: 20px; /* Adjust as needed */
+    }
+    
+    .DarkTheme,
+    .LightThemeClose {
+        left: 20px; /* Adjust as needed */
+    }
+}
